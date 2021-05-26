@@ -1,6 +1,4 @@
-defmodule Sgp40.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
+defmodule SGP40.Application do
   @moduledoc false
 
   use Application
@@ -8,13 +6,16 @@ defmodule Sgp40.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Sgp40.Worker.start_link(arg)
-      # {Sgp40.Worker, arg}
+      SGP40.VocIndex
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Sgp40.Supervisor]
+    opts = [
+      name: SGP40.Supervisor,
+      strategy: :one_for_one,
+      max_restarts: 3,
+      max_seconds: 5
+    ]
+
     Supervisor.start_link(children, opts)
   end
 end
