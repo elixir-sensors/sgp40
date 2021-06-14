@@ -11,11 +11,11 @@ defmodule SGP40.Transport.I2C do
   @impl SGP40.Transport
   @spec start_link(bus_name: bus_name, bus_address: bus_address) ::
           {:ok, transport} | {:error, any}
-  def start_link([bus_name: _, bus_address: _] = args) do
+  def start_link(opts) do
     apply(
       transport_module(),
       :start_link,
-      [args]
+      [opts]
     )
   end
 

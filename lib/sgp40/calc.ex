@@ -87,14 +87,14 @@ defmodule SGP40.Calc do
   end
 
   def checksum(bytes_list) when is_list(bytes_list) do
-    Enum.reduce(bytes_list, 0xFF, &each_byte_crc_accumulator/2) &&& 0xFF
+    Enum.reduce(bytes_list, 0xFF, &each_byte_crc_reducer/2) &&& 0xFF
   end
 
-  defp each_byte_crc_accumulator(byte, acc) do
-    Enum.reduce(0..7, bxor(acc, byte), &each_bit_crc_accumulator/2)
+  defp each_byte_crc_reducer(byte, acc) do
+    Enum.reduce(0..7, bxor(acc, byte), &each_bit_crc_reducer/2)
   end
 
-  defp each_bit_crc_accumulator(_bit, acc) do
+  defp each_bit_crc_reducer(_bit, acc) do
     case acc &&& 0x80 do
       0 -> acc <<< 1
       _ -> bxor(acc <<< 1, 0x31)

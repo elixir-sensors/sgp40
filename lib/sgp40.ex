@@ -45,15 +45,14 @@ defmodule SGP40 do
   """
   @spec start_link(options()) :: GenServer.on_start()
   def start_link(init_arg \\ []) do
-    name = Keyword.get(init_arg, :name)
-    GenServer.start_link(__MODULE__, init_arg, name: name)
+    GenServer.start_link(__MODULE__, init_arg, name: init_arg[:name])
   end
 
   @doc """
   Measure the current air quality.
   """
   @spec measure(GenServer.server()) :: {:ok, integer} | {:error, any}
-  def measure(server \\ __MODULE__) do
+  def measure(server) do
     GenServer.call(server, :measure)
   end
 
@@ -62,17 +61,17 @@ defmodule SGP40 do
   for the humidity compensation.
   """
   @spec update_rht(GenServer.server(), number, number) :: :ok
-  def update_rht(server \\ __MODULE__, humidity_rh, temperature_c)
+  def update_rht(server, humidity_rh, temperature_c)
       when is_number(humidity_rh) and is_number(temperature_c) do
     GenServer.cast(server, {:update_rht, humidity_rh, temperature_c})
   end
 
   @impl GenServer
   def init(init_arg) do
-    bus_name = Keyword.get(init_arg, :bus_name, @default_bus_name)
-    bus_address = Keyword.get(init_arg, :bus_address, @default_bus_address)
-    humidity_rh = Keyword.get(init_arg, :humidity_rh, @default_humidity_rh)
-    temperature_c = Keyword.get(init_arg, :temperature_c, @default_temperature_c)
+    bus_name = init_arg[:bus_name] || @default_bus_name
+    bus_address = init_arg[:bus_address] || @default_bus_address
+    humidity_rh = init_arg[:humidity_rh] || @default_humidity_rh
+    temperature_c = init_arg[:temperature_c] || @default_temperature_c
 
     Logger.info(
       "[SGP40] Starting on bus #{bus_name} at address #{inspect(bus_address, base: :hex)}"

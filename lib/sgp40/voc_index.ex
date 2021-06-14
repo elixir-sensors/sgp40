@@ -121,17 +121,7 @@ defmodule SGP40.VocIndex do
   end
 
   @impl GenServer
-  def handle_call(
-        {:set_tuning_params,
-         %{
-           voc_index_offset: _,
-           learning_time_hours: _,
-           gating_max_duration_minutes: _,
-           std_initial: _
-         } = args},
-        _,
-        state
-      ) do
+  def handle_call({:set_tuning_params, args}, _, state) do
     stringified_args =
       [
         "#{args.voc_index_offset}",
