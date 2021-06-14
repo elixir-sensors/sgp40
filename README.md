@@ -1,6 +1,7 @@
 # SGP40
 
 [![Hex version](https://img.shields.io/hexpm/v/sgp40.svg "Hex version")](https://hex.pm/packages/sgp40)
+[![API docs](https://img.shields.io/hexpm/v/sgp40.svg?label=docs "API docs")](https://hexdocs.pm/sgp40)
 [![CI](https://github.com/mnishiguchi/sgp40/actions/workflows/ci.yml/badge.svg)](https://github.com/mnishiguchi/sgp40/actions/workflows/ci.yml)
 
 Use [Sensirion SGP40](https://www.sensirion.com/en/environmental-sensors/gas-sensors/sgp40/) air quality sensor in Elixir.
