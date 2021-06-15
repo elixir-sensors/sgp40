@@ -12,7 +12,7 @@ defmodule SGP40.CommTest do
   end
 
   test "serial_id", %{transport: transport} do
-    Mox.expect(SGP40.MockI2C, :write_read, 1, fn _transport, <<0x36, 0x82>>, 3 ->
+    Mox.expect(SGP40.MockTransport, :write_read, 1, fn _transport, <<0x36, 0x82>>, 3 ->
       {:ok, <<28, 38, 154>>}
     end)
 
@@ -20,7 +20,7 @@ defmodule SGP40.CommTest do
   end
 
   test "measure_raw_with_rht", %{transport: transport} do
-    SGP40.MockI2C
+    SGP40.MockTransport
     |> Mox.expect(
       :write,
       1,
