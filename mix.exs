@@ -1,7 +1,7 @@
 defmodule SGP40.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
   @source_url "https://github.com/mnishiguchi/sgp40"
 
   def project do
@@ -71,6 +71,7 @@ defmodule SGP40.MixProject do
         "mix.exs",
         "README.md",
         "LICENSE*",
+        "CHANGELOG*",
         "Makefile"
       ],
       licenses: ["MIT"],
