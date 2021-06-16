@@ -12,23 +12,15 @@ defmodule SGP40.CommTest do
   end
 
   test "serial_id", %{transport: transport} do
-    Mox.expect(SGP40.MockTransport, :write_read, 1, fn _transport, <<0x36, 0x82>>, 3 ->
-      {:ok, <<28, 38, 154>>}
-    end)
+    SGP40.MockTransport
+    |> Mox.expect(:write_read, 1, fn _transport, <<0x36, 0x82>>, 3 -> {:ok, <<28, 38, 154>>} end)
 
     assert {:ok, "1C269A"} = SGP40.Comm.serial_id(transport)
   end
 
   test "measure_raw_with_rht", %{transport: transport} do
     SGP40.MockTransport
-    |> Mox.expect(
-      :write,
-      1,
-      fn _transport,
-         [<<0x26, 0x0F>>, <<_h_val::unsigned-16, _h_crc, _t_val::unsigned-16, _t_crc>>] ->
-        :ok
-      end
-    )
+    |> Mox.expect(:write, 1, fn _transport, [<<0x26, 0x0F>>, <<_::48>>] -> :ok end)
     |> Mox.expect(:read, 1, fn _transport, 2 -> {:ok, 28} end)
 
     assert {:ok, 28} = SGP40.Comm.measure_raw_with_rht(transport, 50, 25)
