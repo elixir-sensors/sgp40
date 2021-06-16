@@ -51,7 +51,7 @@ defmodule SGP40 do
   @doc """
   Measure the current air quality.
   """
-  @spec measure(GenServer.server()) :: {:ok, integer} | {:error, any}
+  @spec measure(GenServer.server()) :: {:ok, SGP40.Measurement.t()} | {:error, any}
   def measure(server) do
     GenServer.call(server, :measure)
   end

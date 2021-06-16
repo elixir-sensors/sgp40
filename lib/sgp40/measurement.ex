@@ -1,5 +1,7 @@
 defmodule SGP40.Measurement do
-  @moduledoc false
+  @moduledoc """
+  One sensor measurement
+  """
 
   defstruct [:timestamp_ms, :voc_index]
 
