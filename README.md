@@ -6,7 +6,7 @@
 
 Use [Sensirion SGP40](https://www.sensirion.com/en/environmental-sensors/gas-sensors/sgp40/) air quality sensor in Elixir.
 
-The raw signal from the SGP40 sensor is processed using [Sensirion's software algorithm](https://github.com/Sensirion/embedded-sgp/blob/00768191892b2cc0d839ebf95998fc4a85b660c4/sgp40_voc_index/sensirion_voc_algorithm.h#L1) to give the [VOC Index](https://cdn.sparkfun.com/assets/e/9/3/f/e/GAS_AN_SGP40_VOC_Index_for_Experts_D1.pdf) that represents an air quality value on a scale from 0 to 500 where a lower value represents cleaner air.
+The raw signal from the SGP40 sensor is processed using [Sensirion's software algorithm](https://github.com/Sensirion/embedded-sgp/blob/00768191892b2cc0d839ebf95998fc4a85b660c4/sgp40_voc_index/sensirion_voc_algorithm.h) to give the [VOC Index](https://cdn.sparkfun.com/assets/e/9/3/f/e/GAS_AN_SGP40_VOC_Index_for_Experts_D1.pdf) that represents an air quality value on a scale from 0 to 500 where a lower value represents cleaner air.
 
 ## Usage
 
