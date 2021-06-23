@@ -1,22 +1,16 @@
 name: CI
-
-on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main]
-
-env:
-  MIX_ENV: test
-
+on: [push, pull_request]
 jobs:
   deps:
     name: Dependencies
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.11, 1.12]
-        otp: [23, 24]
+        include:
+          - elixir: 1.11
+            otp: 23
+          - elixir: 1.12
+            otp: 24
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
@@ -60,8 +54,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.11, 1.12]
-        otp: [23, 24]
+        include:
+          - elixir: 1.11
+            otp: 23
+          - elixir: 1.12
+            otp: 24
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
@@ -105,8 +102,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        elixir: [1.11, 1.12]
-        otp: [23, 24]
+        include:
+          - elixir: 1.11
+            otp: 23
+          - elixir: 1.12
+            otp: 24
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
