@@ -1,0 +1,6 @@
+[submodule "src/embedded-sgp"]
+	path = src/embedded-sgp
+	url = https://github.com/Sensirion/embedded-sgp
+[submodule "src/embedded-common"]
+	path = src/embedded-common
+	url = https://github.com/Sensirion/embedded-common

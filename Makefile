@@ -24,21 +24,27 @@ BUILD  = $(MIX_COMPILE_PATH)/../obj
 ifeq ($(CROSSCOMPILE),)
 # Host testing build
 CFLAGS += -DDEBUG
-SRC = src/main.c \
-      src/sensirion_voc_algorithm.c
 else
 # Normal build
+endif
+
 SRC = src/main.c \
       src/sensirion_voc_algorithm.c
-endif
 
 OBJ = $(patsubst src/%,$(BUILD)/%,$(SRC:.c=.o))
 
-calling_from_make:
+copy_sensirion_files_to_src:
+	cp src/embedded-common/sensirion_arch_config.h src && \
+	cp src/embedded-sgp/sgp40_voc_index/sensirion_voc_algorithm.[ch] src
 
+delete_sensirion_files_from_src:
+	rm src/sensirion_arch_config.h && \
+	rm src/sensirion_voc_algorithm.[ch]
+
+calling_from_make:
 	mix compile
 
-all: $(PREFIX) $(PREFIX)/sgp40
+all: copy_sensirion_files_to_src $(PREFIX) $(PREFIX)/sgp40 delete_sensirion_files_from_src
 
 $(PREFIX):
 	mkdir -p $@
@@ -49,7 +55,7 @@ $(BUILD):
 $(BUILD)/sensirion_voc_algorithm:
 	mkdir -p $@
 
-$(BUILD)/%.o: src/%.c $(BUILD) $(BUILD)/sensirion_voc_algorithm
+$(BUILD)/%.o: src/%.c $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(PREFIX)/sgp40: $(OBJ)
