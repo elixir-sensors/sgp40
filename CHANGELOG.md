@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2.1] - 2021-06-25
+
 ## [0.1.2] - 2021-06-23
 ### Changed
 
@@ -40,7 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/mnishiguchi/sgp40/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/mnishiguchi/sgp40/compare/v0.1.2.1...HEAD
+[0.1.2.1]: https://github.com/mnishiguchi/sgp40/compare/v0.1.2...v0.1.2.1
 [0.1.2]: https://github.com/mnishiguchi/sgp40/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/mnishiguchi/sgp40/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/mnishiguchi/sgp40/releases/tag/v0.1.0
