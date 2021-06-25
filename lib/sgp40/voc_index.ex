@@ -3,6 +3,9 @@ defmodule SGP40.VocIndex do
   Process the raw output of the SGP40 sensor into the VOC Index.
   """
 
+  alias SGP40.VocIndex.AlgorithmStates
+  alias SGP40.VocIndex.AlgorithmTuningParams
+
   use GenServer, restart: :permanent
 
   require Logger
@@ -35,7 +38,7 @@ defmodule SGP40.VocIndex do
   skipping initial learning phase. This feature can only be used after at least
   3 hours of continuous operation.
   """
-  @spec get_states :: {:ok, %{mean: integer, std: integer}} | {:error, any}
+  @spec get_states :: {:ok, AlgorithmStates.t()} | {:error, any}
   def get_states() do
     GenServer.call(__MODULE__, :get_states)
   end
@@ -47,7 +50,7 @@ defmodule SGP40.VocIndex do
   `start_link/1` and the optional `set_tuning_params/1`, if
   desired. Otherwise, the algorithm will start with initial learning phase.
   """
-  @spec set_states(%{mean: integer, std: integer}) :: {:ok, binary} | {:error, any}
+  @spec set_states(AlgorithmStates.t()) :: {:ok, binary} | {:error, any}
   def set_states(args) do
     GenServer.call(__MODULE__, {:set_states, args})
   end
@@ -56,12 +59,7 @@ defmodule SGP40.VocIndex do
   Set parameters to customize the VOC algorithm. Call this once after
   `start_link/1`, if desired. Otherwise, the default values will be used.
   """
-  @spec set_tuning_params(%{
-          required(:voc_index_offset) => 0..0x7FFF_FFFF,
-          required(:learning_time_hours) => 0..0x7FFF_FFFF,
-          required(:gating_max_duration_minutes) => 0..0x7FFF_FFFF,
-          required(:std_initial) => 0..0x7FFF_FFFF
-        }) :: {:ok, binary} | {:error, any}
+  @spec set_tuning_params(AlgorithmTuningParams.t()) :: {:ok, binary} | {:error, any}
   def set_tuning_params(args) do
     GenServer.call(__MODULE__, {:set_tuning_params, args})
   end
@@ -105,8 +103,11 @@ defmodule SGP40.VocIndex do
     case send_port_command(state.port, command) do
       {:ok, data} ->
         ["mean:" <> mean, "std:" <> std] = String.split(String.trim(data), ",", trim: true)
-        parsed = %{mean: String.to_integer(mean), std: String.to_integer(std)}
-        {:reply, {:ok, parsed}, state}
+        mean = String.to_integer(mean)
+        std = String.to_integer(std)
+        states = %AlgorithmStates{mean: mean, std: std}
+
+        {:reply, {:ok, states}, state}
 
       error ->
         {:reply, error, state}
@@ -114,7 +115,7 @@ defmodule SGP40.VocIndex do
   end
 
   @impl GenServer
-  def handle_call({:set_states, %{mean: _, std: _} = args}, _, state) do
+  def handle_call({:set_states, args}, _, state) do
     command = "set_states #{args.mean} #{args.std}\n"
     result = send_port_command(state.port, command)
     {:reply, result, state}
