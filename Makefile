@@ -24,14 +24,12 @@ BUILD  = $(MIX_COMPILE_PATH)/../obj
 ifeq ($(CROSSCOMPILE),)
 # Host testing build
 CFLAGS += -DDEBUG
-SRC = src/main.c \
-      src/sensirion_voc_algorithm.c
 else
 # Normal build
-SRC = src/main.c \
-      src/sensirion_voc_algorithm.c
 endif
 
+SRC = src/main.c \
+      src/sensirion_voc_algorithm.c
 OBJ = $(patsubst src/%,$(BUILD)/%,$(SRC:.c=.o))
 
 calling_from_make:
@@ -49,7 +47,7 @@ $(BUILD):
 $(BUILD)/sensirion_voc_algorithm:
 	mkdir -p $@
 
-$(BUILD)/%.o: src/%.c $(BUILD) $(BUILD)/sensirion_voc_algorithm
+$(BUILD)/%.o: src/%.c $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(PREFIX)/sgp40: $(OBJ)
