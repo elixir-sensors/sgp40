@@ -79,7 +79,7 @@ defmodule SGP40.VocIndex do
     {:ok, %{port: port}}
   end
 
-  defp executable_filename do
+  defp executable_filename() do
     :code.priv_dir(:sgp40) |> Path.join("sgp40") |> String.to_charlist()
   end
 
