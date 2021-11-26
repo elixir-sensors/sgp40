@@ -6,7 +6,4 @@ end
 # Define dynamic mocks
 Mox.defmock(SGP40.MockTransport, for: SGP40.Transport)
 
-# Override the config settings
-Application.put_env(:sgp40, :transport_module, SGP40.MockTransport)
-
 ExUnit.start()
