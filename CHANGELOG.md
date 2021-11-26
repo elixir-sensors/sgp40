@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2021-11-26
+
+**Improvement**
+
+- Support both v0 and v1 of `circuits_i2c`
+- Do not use `i2c_server`
+
 ## [0.1.3] - 2021-06-25
 ### Fixed
 
