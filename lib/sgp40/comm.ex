@@ -63,7 +63,7 @@ defmodule SGP40.Comm do
          do: {:ok, sraw}
   end
 
-    defp transport_mod() do
+  defp transport_mod() do
     Application.get_env(:sgp40, :transport_mod, SGP40.Transport.I2C)
   end
 end
