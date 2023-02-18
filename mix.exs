@@ -16,6 +16,7 @@ defmodule SGP40.MixProject do
       build_embedded: true,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       aliases: [],
       dialyzer: dialyzer(),
@@ -43,6 +44,9 @@ defmodule SGP40.MixProject do
       {:mox, "~> 1.0", only: :test}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["test/support", "lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp dialyzer() do
     [
