@@ -4,6 +4,8 @@ jobs:
   deps:
     name: Dependencies
     runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
     strategy:
       matrix:
         include:
@@ -52,6 +54,8 @@ jobs:
     name: Static Code Analysis
     needs: deps
     runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
     strategy:
       matrix:
         include:
@@ -99,6 +103,8 @@ jobs:
     name: Unit Tests
     needs: deps
     runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
     strategy:
       fail-fast: false
       matrix:
