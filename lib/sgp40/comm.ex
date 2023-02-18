@@ -1,7 +1,7 @@
 defmodule SGP40.Comm do
   @moduledoc false
 
-  alias SGP40.{Calc, Transport}
+  alias SGP40.Calc
 
   @cmd_measure_raw <<0x26, 0x0F>>
   @cmd_measure_test <<0x28, 0x0E>>

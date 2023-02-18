@@ -1,7 +1,7 @@
 defmodule SGP40.Calc do
   @moduledoc false
 
-  use Bitwise
+  import Bitwise
 
   @doc """
   Convert humidity RH in the format used by the SGP40 sensor.
