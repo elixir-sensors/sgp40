@@ -1,16 +1,18 @@
 defmodule SGP40.Comm do
   @moduledoc false
 
-  alias SGP40.{Calc, Transport}
+  alias SGP40.Calc
 
   @cmd_measure_raw <<0x26, 0x0F>>
   @cmd_measure_test <<0x28, 0x0E>>
   @cmd_get_serial_id <<0x36, 0x82>>
   @cmd_get_featureset <<0x20, 0x2F>>
 
+  @transport_mod Application.compile_env(:sgp40, :transport_mod, SGP40.Transport.I2C)
+
   @spec serial_id(pid) :: {:ok, binary}
   def serial_id(transport) do
-    case transport_mod().write_read(transport, @cmd_get_serial_id, 3) do
+    case @transport_mod.write_read(transport, @cmd_get_serial_id, 3) do
       {:ok, serial_id_binary} -> {:ok, Base.encode16(serial_id_binary)}
       error -> error
     end
@@ -18,7 +20,7 @@ defmodule SGP40.Comm do
 
   @spec featureset(any) :: {:ok, byte}
   def featureset(transport) do
-    case transport_mod().write_read(transport, @cmd_get_featureset, 1) do
+    case @transport_mod.write_read(transport, @cmd_get_featureset, 1) do
       {:ok, <<featureset>>} -> {:ok, featureset}
       error -> error
     end
@@ -30,9 +32,9 @@ defmodule SGP40.Comm do
   """
   @spec measure_test(pid) :: {:ok, binary}
   def measure_test(transport) do
-    with :ok <- transport_mod().write(transport, @cmd_measure_test),
+    with :ok <- @transport_mod.write(transport, @cmd_measure_test),
          :ok <- Process.sleep(250),
-         {:ok, <<result::unsigned-16>>} <- transport_mod().read(transport, 2),
+         {:ok, <<result::unsigned-16>>} <- @transport_mod.read(transport, 2),
          do: {:ok, result}
   end
 
@@ -57,13 +59,9 @@ defmodule SGP40.Comm do
     # XX XX XX YY YY YY
     args = <<h_val::unsigned-16, h_crc, t_val::unsigned-16, t_crc>>
 
-    with :ok <- transport_mod().write(transport, [@cmd_measure_raw, args]),
+    with :ok <- @transport_mod.write(transport, [@cmd_measure_raw, args]),
          :ok <- Process.sleep(250),
-         {:ok, <<sraw::unsigned-16>>} <- transport_mod().read(transport, 2),
+         {:ok, <<sraw::unsigned-16>>} <- @transport_mod.read(transport, 2),
          do: {:ok, sraw}
-  end
-
-  defp transport_mod() do
-    Application.get_env(:sgp40, :transport_mod, SGP40.Transport.I2C)
   end
 end

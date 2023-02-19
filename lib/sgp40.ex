@@ -38,6 +38,8 @@ defmodule SGP40 do
   @default_humidity_rh 50
   @default_temperature_c 25
 
+  @transport_mod Application.compile_env(:sgp40, :transport_mod, SGP40.Transport.I2C)
+
   @doc """
   Start a new GenServer for interacting with the SGP40 sensor.
   Normally, you'll want to pass the `:bus_name` option to specify the I2C
@@ -77,7 +79,7 @@ defmodule SGP40 do
       "[SGP40] Starting on bus #{bus_name} at address #{inspect(bus_address, base: :hex)}"
     )
 
-    case transport_mod().open(bus_name: bus_name, bus_address: bus_address) do
+    case @transport_mod.open(bus_name: bus_name, bus_address: bus_address) do
       {:ok, transport} ->
         {:ok, serial_id} = SGP40.Comm.serial_id(transport)
 
@@ -148,8 +150,4 @@ defmodule SGP40 do
   defdelegate get_states, to: SGP40.VocIndex
   defdelegate set_states(args), to: SGP40.VocIndex
   defdelegate set_tuning_params(args), to: SGP40.VocIndex
-
-  defp transport_mod() do
-    Application.get_env(:sgp40, :transport_mod, SGP40.Transport.I2C)
-  end
 end

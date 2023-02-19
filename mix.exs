@@ -16,6 +16,7 @@ defmodule SGP40.MixProject do
       build_embedded: true,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       aliases: [],
       dialyzer: dialyzer(),
@@ -38,11 +39,14 @@ defmodule SGP40.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:elixir_make, "~> 0.6", runtime: false},
-      {:ex_doc, "~> 0.26", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.29", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.1", only: :dev, runtime: false},
       {:mox, "~> 1.0", only: :test}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["test/support", "lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp dialyzer() do
     [

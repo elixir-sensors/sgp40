@@ -3,33 +3,35 @@ on: [push, pull_request]
 jobs:
   deps:
     name: Dependencies
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
     strategy:
       matrix:
         include:
-          - elixir: 1.11
-            otp: 23
-          - elixir: 1.12
+          - elixir: 1.13
             otp: 24
+          - elixir: 1.14
+            otp: 25
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+        uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup
-        uses: erlef/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
 
       - name: Retrieve Cached Dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: mix-cache
         with:
           path: |
@@ -51,33 +53,35 @@ jobs:
   static_code_analysis:
     name: Static Code Analysis
     needs: deps
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
     strategy:
       matrix:
         include:
-          - elixir: 1.11
-            otp: 23
-          - elixir: 1.12
+          - elixir: 1.13
             otp: 24
+          - elixir: 1.14
+            otp: 25
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+        uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup
-        uses: erlef/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
 
       - name: Retrieve Cached Dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: mix-cache
         with:
           path: |
@@ -98,34 +102,36 @@ jobs:
   unit_tests:
     name: Unit Tests
     needs: deps
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
     strategy:
       fail-fast: false
       matrix:
         include:
-          - elixir: 1.11
-            otp: 23
-          - elixir: 1.12
+          - elixir: 1.13
             otp: 24
+          - elixir: 1.14
+            otp: 25
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+        uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup
-        uses: erlef/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
 
       - name: Retrieve Cached Dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: mix-cache
         with:
           path: |
