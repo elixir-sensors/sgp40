@@ -35,7 +35,7 @@ defmodule SGP40.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:circuits_i2c, "~> 1.0 or ~> 0.3"},
+      {:circuits_i2c, "~> 2.0 or ~> 1.0 or ~> 0.3.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:elixir_make, "~> 0.6", runtime: false},
