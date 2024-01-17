@@ -153,13 +153,13 @@ defmodule SGP40.VocIndex do
 
   defp receive_from_port(port) do
     receive do
-      {^port, {:data, {_, 'OK: ' ++ response}}} ->
+      {^port, {:data, {_, ~c"OK: " ++ response}}} ->
         {:ok, to_string(response)}
 
-      {^port, {:data, {_, 'OK'}}} ->
+      {^port, {:data, {_, ~c"OK"}}} ->
         :ok
 
-      {^port, {:data, {_, 'ERR: ' ++ response}}} ->
+      {^port, {:data, {_, ~c"ERR: " ++ response}}} ->
         {:error, to_string(response)}
 
       {^port, {:exit_status, exit_status}} ->
