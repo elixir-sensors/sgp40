@@ -13,6 +13,10 @@ jobs:
             otp: 25
           - elixir: 1.16
             otp: 26
+          - elixir: 1.17
+            otp: 27
+          - elixir: 1.18
+            otp: 27
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -59,10 +63,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - elixir: 1.15
-            otp: 25
-          - elixir: 1.16
-            otp: 26
+          - elixir: 1.18
+            otp: 27
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -113,6 +115,10 @@ jobs:
             otp: 25
           - elixir: 1.16
             otp: 26
+          - elixir: 1.17
+            otp: 27
+          - elixir: 1.18
+            otp: 27
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -141,4 +147,4 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
 
       - name: Run test
-        run: mix test --trace --slowest 10
+        run: mix test --warnings-as-errors --trace --slowest 10

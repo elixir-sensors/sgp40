@@ -10,7 +10,7 @@ defmodule SGP40.Comm do
 
   @transport_mod Application.compile_env(:sgp40, :transport_mod, SGP40.Transport.I2C)
 
-  @spec serial_id(pid) :: {:ok, binary}
+  @spec serial_id(any) :: {:ok, binary} | {:error, any()}
   def serial_id(transport) do
     case @transport_mod.write_read(transport, @cmd_get_serial_id, 3) do
       {:ok, serial_id_binary} -> {:ok, Base.encode16(serial_id_binary)}
@@ -18,7 +18,7 @@ defmodule SGP40.Comm do
     end
   end
 
-  @spec featureset(any) :: {:ok, byte}
+  @spec featureset(any) :: {:ok, byte} | {:error, any()}
   def featureset(transport) do
     case @transport_mod.write_read(transport, @cmd_get_featureset, 1) do
       {:ok, <<featureset>>} -> {:ok, featureset}
@@ -30,7 +30,7 @@ defmodule SGP40.Comm do
   Triggers the built-in self-test checking for integrity of both hotplate and MOX material and
   returns the result of this test as 2 bytes (+ 1 CRC byte).
   """
-  @spec measure_test(pid) :: {:ok, binary}
+  @spec measure_test(pid) :: {:ok, binary} | {:error, any()}
   def measure_test(transport) do
     with :ok <- @transport_mod.write(transport, @cmd_measure_test),
          :ok <- Process.sleep(250),
