@@ -29,7 +29,14 @@ defmodule SGP40 do
 
   defmodule State do
     @moduledoc false
-    defstruct [:humidity_rh, :last_measurement, :serial_id, :temperature_c, :transport]
+    defstruct [
+      :humidity_rh,
+      :last_measurement,
+      :serial_id,
+      :temperature_c,
+      :transport,
+      :voc_index
+    ]
   end
 
   @default_bus_name "i2c-1"
@@ -58,6 +65,24 @@ defmodule SGP40 do
     GenServer.call(server, :measure)
   end
 
+  @spec get_states(GenServer.server()) ::
+          {:ok, SGP40.VocIndex.AlgorithmStates.t()} | {:error, any}
+  def get_states(server) do
+    GenServer.call(server, :get_states)
+  end
+
+  @spec set_states(GenServer.server(), SGP40.VocIndex.AlgorithmStates.t()) ::
+          {:ok, binary} | {:error, any}
+  def set_states(server, args) do
+    GenServer.call(server, {:set_states, args})
+  end
+
+  @spec set_tuning_params(GenServer.server(), SGP40.VocIndex.AlgorithmTuningParams.t()) ::
+          {:ok, binary} | {:error, any}
+  def set_tuning_params(server, args) do
+    GenServer.call(server, {:set_tuning_params, args})
+  end
+
   @doc """
   Update relative ambient humidity (RH %) and ambient temperature (degree C)
   for the humidity compensation.
@@ -82,13 +107,15 @@ defmodule SGP40 do
     case @transport_mod.open(bus_name: bus_name, bus_address: bus_address) do
       {:ok, transport} ->
         {:ok, serial_id} = SGP40.Comm.serial_id(transport)
+        {:ok, voc_index} = SGP40.VocIndex.start_link()
 
         state = %State{
           humidity_rh: humidity_rh,
           last_measurement: nil,
           serial_id: serial_id,
           temperature_c: temperature_c,
-          transport: transport
+          transport: transport,
+          voc_index: voc_index
         }
 
         {:ok, state, {:continue, :init_sensor}}
@@ -123,7 +150,7 @@ defmodule SGP40 do
              state.humidity_rh,
              state.temperature_c
            ),
-         {:ok, voc_index} <- SGP40.VocIndex.process(sraw) do
+         {:ok, voc_index} <- SGP40.VocIndex.process(state.voc_index, sraw) do
       timestamp_ms = System.monotonic_time(:millisecond)
       measurement = %SGP40.Measurement{timestamp_ms: timestamp_ms, voc_index: voc_index}
 
@@ -140,14 +167,22 @@ defmodule SGP40 do
     {:reply, {:ok, state.last_measurement}, state}
   end
 
+  def handle_call(:get_states, _from, state) do
+    {:reply, SGP40.VocIndex.get_states(state.voc_index), state}
+  end
+
+  def handle_call({:set_states, args}, _from, state) do
+    {:reply, SGP40.VocIndex.set_states(state.voc_index, args), state}
+  end
+
+  def handle_call({:set_tuning_params, args}, _from, state) do
+    {:reply, SGP40.VocIndex.set_tuning_params(state.voc_index, args), state}
+  end
+
   @impl GenServer
   def handle_cast({:update_rht, humidity_rh, temperature_c}, state) do
     state = %{state | humidity_rh: humidity_rh, temperature_c: temperature_c}
 
     {:noreply, state}
   end
-
-  defdelegate get_states, to: SGP40.VocIndex
-  defdelegate set_states(args), to: SGP40.VocIndex
-  defdelegate set_tuning_params(args), to: SGP40.VocIndex
 end
