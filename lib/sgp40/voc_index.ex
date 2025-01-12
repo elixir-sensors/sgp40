@@ -14,7 +14,7 @@ defmodule SGP40.VocIndex do
   Initialize the VOC algorithm parameters. Call this once at the beginning or
   whenever the sensor stopped measurements.
   """
-  @spec start_link(any) :: GenServer.on_start()
+  @spec start_link(keyword()) :: GenServer.on_start()
   def start_link(_args \\ []) do
     case GenServer.start_link(__MODULE__, nil, name: __MODULE__) do
       {:ok, pid} -> {:ok, pid}
