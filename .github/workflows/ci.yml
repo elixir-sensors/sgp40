@@ -148,3 +148,18 @@ jobs:
 
       - name: Run test
         run: mix test --warnings-as-errors --trace --slowest 10
+
+  reuse:
+    name: Check REUSE Compliance
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install REUSE tool
+        run: pip install reuse
+
+      - name: Run REUSE lint
+        run: reuse lint

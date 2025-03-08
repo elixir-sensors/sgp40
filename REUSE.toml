@@ -1,0 +1,40 @@
+version = 1
+
+[[annotations]]
+path = [
+  ".credo.exs",
+  ".formatter.exs",
+  ".github/workflows/ci.yml",
+  ".github/workflows/hex.yml",
+  ".gitignore",
+  "CHANGELOG.md",
+  "NOTICE",
+  "REUSE.toml",
+  "mix.exs",
+  "mix.lock",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["README.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Masatoshi Nishiguchi"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = [
+  "src/sensirion_voc_algorithm.c",
+  "src/sensirion_voc_algorithm.h",
+  "src/sensirion_arch_config.h",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2019-2021 Sensirion AG"
+SPDX-License-Identifier = "BSD-3-Clause"
+
+[[annotations]]
+path = ["src/port_interface.h"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2016-2018 Greg Mefford"
+SPDX-License-Identifier = "MIT"

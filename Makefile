@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Masatoshi Nishiguchi
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Makefile for building the Sensirion VOC Algorithm port executable
 #
 # Variables to override

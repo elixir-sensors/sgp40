@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2021 Masatoshi Nishiguchi
+# SPDX-FileCopyrightText: 2025 Frank Hunleth
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule SGP40.Comm do
   @moduledoc false
 

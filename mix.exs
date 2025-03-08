@@ -3,6 +3,7 @@ defmodule SGP40.MixProject do
 
   @version "0.1.6"
   @source_url "https://github.com/mnishiguchi/sgp40"
+  @reuse_compliance_url "https://api.reuse.software/info/github.com/elixir-sensors/sgp40"
 
   def project do
     [
@@ -69,13 +70,16 @@ defmodule SGP40.MixProject do
         "src/*.[ch]",
         "mix.exs",
         "README.md",
-        "LICENSE*",
         "CHANGELOG*",
-        "Makefile"
+        "Makefile",
+        "LICENSES",
+        "NOTICE",
+        "REUSE.toml"
       ],
-      licenses: ["MIT"],
+      licenses: ["Apache-2.0", "BSD-3-Clause", "MIT"],
       links: %{
         "GitHub" => @source_url,
+        "REUSE compliance" => @reuse_compliance_url,
         "SGP40 - data sheet" =>
           "https://cdn-learn.adafruit.com/assets/assets/000/097/511/original/Sensirion_Gas-Sensors_SGP40_Datasheet.pdf",
         "SGP40 - VOC index for experts" =>
