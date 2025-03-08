@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2021 Masatoshi Nishiguchi
+//
+// SPDX-License-Identifier: Apache-2.0
+//
 #include <stdlib.h>
 #include <err.h>
 #include <errno.h>
