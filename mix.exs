@@ -76,7 +76,7 @@ defmodule SGP40.MixProject do
         "NOTICE",
         "REUSE.toml"
       ],
-      licenses: ["Apache-2.0"],
+      licenses: ["Apache-2.0", "BSD-3-Clause", "MIT"],
       links: %{
         "GitHub" => @source_url,
         "REUSE compliance" => @reuse_compliance_url,
