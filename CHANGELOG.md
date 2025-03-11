@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2025-03-09
+
+**Changed**
+
+- REUSE Compliance
+- Make pure library and support >1 sensor
+- Bump dependencies, CI, and update Dialyzer
+
 ## [0.1.6] - 2024-01-17
 
 **Changed**
@@ -76,11 +84,12 @@ Fix Elixir code based on warnings. Nothing will be changed at the high level.
 
 - Initial release
 
-[Unreleased]: https://github.com/mnishiguchi/sgp40/compare/v0.1.6...HEAD
-[0.1.6]: https://github.com/mnishiguchi/sgp40/compare/v0.1.5...v0.1.6
-[0.1.5]: https://github.com/mnishiguchi/sgp40/compare/v0.1.4...v0.1.5
-[0.1.4]: https://github.com/mnishiguchi/sgp40/compare/v0.1.3...v0.1.4
-[0.1.3]: https://github.com/mnishiguchi/sgp40/compare/v0.1.2...v0.1.3
-[0.1.2]: https://github.com/mnishiguchi/sgp40/compare/v0.1.1...v0.1.2
-[0.1.1]: https://github.com/mnishiguchi/sgp40/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/mnishiguchi/sgp40/releases/tag/v0.1.0
+[Unreleased]: https://github.com/elixir-sensors/sgp40/compare/v0.1.7...HEAD
+[0.1.7]: https://github.com/elixir-sensors/sgp40/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/elixir-sensors/sgp40/compare/v0.1.5...v0.1.6
+[0.1.5]: https://github.com/elixir-sensors/sgp40/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/elixir-sensors/sgp40/compare/v0.1.3...v0.1.4
+[0.1.3]: https://github.com/elixir-sensors/sgp40/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/elixir-sensors/sgp40/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/elixir-sensors/sgp40/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/elixir-sensors/sgp40/releases/tag/v0.1.0
